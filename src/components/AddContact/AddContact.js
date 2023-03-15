@@ -2,8 +2,7 @@ import PropTypes from 'prop-types';
 import css from './AddContact.module.css';
 
 export const AddContact = ({
-  handleNumberInput,
-  handleNameInput,
+  handleInputChange,
   handleSubmit,
   name,
   number,
@@ -15,7 +14,7 @@ export const AddContact = ({
         <input
           className={css.input}
           value={name}
-          onChange={handleNameInput}
+          onChange={handleInputChange}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -26,7 +25,7 @@ export const AddContact = ({
         <input
           className={css.input}
           value={number}
-          onChange={handleNumberInput}
+          onChange={handleInputChange}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"

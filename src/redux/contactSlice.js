@@ -1,35 +1,36 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
 
-const contactInitialState = [];
+const initialState = {
+  items: JSON.parse(localStorage.getItem('contacts')) || [],
+  filter: '',
+};
 
-const contactSlice = createSlice({
-  name: 'contact',
-  initialState: contactInitialState,
+const contactsSlice = createSlice({
+  name: 'contacts',
+  initialState,
   reducers: {
-    addContactAction: {
-      reducer(state, action) {
-        state.push(action.payload);
-      },
-      prepare(name, number) {
-        return {
-          payload: {
-            name,
-            number,
-            id: nanoid(),
-          },
-        };
-      },
+    addContactAction: (state, action) => {
+      const { name, number } = action.payload;
+      const contactExist = state.items.find(contact => contact.name === name);
+      if (!contactExist) {
+        state.items.push({ name, number, id: nanoid() });
+        localStorage.setItem('contacts', JSON.stringify(state.items));
+      }
     },
-    deleteContactAction: {
-      reducer(state, action) {
-        const index = state.findIndex(contact => contact.id === action.payload);
-        if (index !== -1) {
-          state.splice(index, 1);
-        }
-      },
+    deleteContactAction: (state, action) => {
+      const contactId = action.payload;
+      const contactDelete = state.items.filter(
+        contact => contact.id !== contactId
+      );
+      localStorage.setItem('contacts', JSON.stringify(contactDelete));
+      return { ...state, items: contactDelete };
+    },
+    setFilterAction: (state, action) => {
+      state.filter = action.payload;
     },
   },
 });
 
-export const { addContactAction, deleteContactAction } = contactSlice.actions;
-export const contactReducer = contactSlice.reducer;
+export const { addContactAction, deleteContactAction, setFilterAction } =
+  contactsSlice.actions;
+export const contactReducer = contactsSlice.reducer;

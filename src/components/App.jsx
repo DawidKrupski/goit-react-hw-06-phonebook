@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AddContact } from './AddContact/AddContact';
 import { Filter } from './ContactList/Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
+import { nanoid } from '@reduxjs/toolkit';
 import { addContactAction, deleteContactAction } from 'redux/contactSlice';
 
 export const App = () => {
@@ -16,7 +17,11 @@ export const App = () => {
     evt.preventDefault();
     const contactExist = contacts.items.find(contact => contact.name === name);
     if (!contactExist) {
-      dispatch(addContactAction({ name, number }));
+      dispatch(addContactAction({ name, number, id: nanoid() }));
+      localStorage.setItem(
+        'contacts',
+        JSON.stringify([...contacts.items, { name, number, id: nanoid() }])
+      );
     } else {
       alert(`${name} is already in contacts.`);
     }

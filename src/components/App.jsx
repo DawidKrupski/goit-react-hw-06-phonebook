@@ -6,7 +6,7 @@ import { ContactList } from './ContactList/ContactList';
 import { addContactAction, deleteContactAction } from 'redux/contactSlice';
 
 export const App = () => {
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(state => state.contacts.items);
   const dispatch = useDispatch();
 
   const [name, setName] = useState('');

@@ -14,24 +14,13 @@ export const App = () => {
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    const contactExist = contacts.items.find(contact => contact.name === name);
+    const contactExist = contacts.find(contact => contact.name === name);
     if (!contactExist) {
       dispatch(addContactAction({ name, number }));
     } else {
       alert(`${name} is already in contacts.`);
     }
   };
-
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('contacts'));
-    if (data && data.length > 0) {
-      data.forEach(contact => {
-        if (contact.name) {
-          dispatch(addContactAction(contact));
-        }
-      });
-    }
-  }, [dispatch]);
 
   const handleInputChange = evt => {
     const { name, value } = evt.target;

@@ -11,11 +11,12 @@ const contactsSlice = createSlice({
   reducers: {
     addContactAction: (state, action) => {
       const { name, number } = action.payload;
-      const contactExist = state.items.find(contact => contact.name === name);
-      if (!contactExist) {
-        state.items.push({ name, number, id: nanoid() });
-        localStorage.setItem('contacts', JSON.stringify(state.items));
-      }
+
+      const contact = { name, number, id: nanoid() };
+
+      state.items.push(contact);
+
+      localStorage.setItem('contacts', JSON.stringify(state.items));
     },
     deleteContactAction: (state, action) => {
       const contactId = action.payload;

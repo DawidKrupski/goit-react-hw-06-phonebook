@@ -5,7 +5,4 @@ export const store = configureStore({
   reducer: {
     contacts: contactReducer,
   },
-  preloadedState: {
-    contacts: { items: [] },
-  },
 });
